@@ -1,11 +1,36 @@
 class Character:
-    def __init__(self, name, actions, health, weakness, stamina, mana):
+    def __init__(self, name, actions, health, weakness, stamina, mana, turn):
         self.name = name
         self.actions = Action()
         self.health = health
         self.weakness = weakness
         self.stamina = stamina
         self.mana = mana
+        self.turn = False
+
+    def handle_input(self, input):
+        if input == "A":
+            showAction()
+        elif input == "D":
+            showDefense()
+        elif input == "I":
+            showItem()
+        elif input == "F":
+            showFlee()
+        else:
+            print("Enter a valid input")
+
+    def showAction(self):
+        pass
+
+    def showDefense(self):
+        pass
+
+    def showItem(self):
+        pass
+
+    def showFlee(self):
+        pass
 
 
 class Action:
@@ -128,4 +153,27 @@ class Status:
 
 
 def main():
-    pass
+
+    while Link.health and Ganon.health > 0:
+        if Link.turn:
+            print(f"Ganon has {Ganon.health}/3000 HP")
+            input("What do you want to do?")
+            action = input(
+                "Enter the letter of your action and press enter: [A]ttack / [D]efend / [I]tem / [F]lee"
+            )
+            action = action.upper()
+            Link.handle_input(action)
+            Link.turn = False
+            Ganon.turn = True
+
+        # Have to have some kind of health check at the end of turns
+        if Ganon.turn:
+            print(f"Link has {Link.health}/1000 HP")
+            print("What do you want to do?")
+            action = input(
+                "Enter the letter of your action: [A]ttack / [D]efend / [I]tem / [F]lee"
+            )
+            action = action.upper()
+            Ganon.handle_input(action)
+            Ganon.turn = False
+            Link.turn = True
